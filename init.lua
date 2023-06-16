@@ -14,8 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = ' '
 
-require("lazy").setup(
-{
+require("lazy").setup({
   -- Tim Pope goodness
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
@@ -36,60 +35,63 @@ require("lazy").setup(
     priority = math.huge,
     version = '^4.0.0',
   },
-  { -- Set lualine as statusline
-  'nvim-lualine/lualine.nvim',
-  -- See `:help lualine.txt`
-  opts = {
-    options = {
-      icons_enabled = false,
-      theme = 'onedark',
-      component_separators = '|',
-      section_separators = '',
+  {
+    'nvim-lualine/lualine.nvim',
+    opts = {
+      options = {
+        icons_enabled = false,
+        theme = 'onedark',
+        component_separators = '|',
+        section_separators = '',
+      },
     },
   },
-},
-{ -- LSP Configuration & Plugins
-'neovim/nvim-lspconfig',
-dependencies = {
-  -- Automatically install LSPs to stdpath for neovim
-  { 'williamboman/mason.nvim', config = true },
-  'williamboman/mason-lspconfig.nvim',
+  {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      -- Automatically install LSPs to stdpath for neovim
+      { 'williamboman/mason.nvim', config = true },
+      'williamboman/mason-lspconfig.nvim',
 
-  -- Useful status updates for LSP
-  -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-  { 'j-hui/fidget.nvim', opts = {}, version = 'legacy' },
+      -- Useful status updates for LSP
+      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+      { 'j-hui/fidget.nvim', opts = {}, version = 'legacy' },
 
-  -- Additional lua configuration, makes nvim stuff amazing!
-  'folke/neodev.nvim',
-},
+      -- Additional lua configuration, makes nvim stuff amazing!
+      'folke/neodev.nvim',
+    },
   },
-  { -- Autocompletion
-  'hrsh7th/nvim-cmp',
-  dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
-},
--- "gc" to comment visual regions/lines
-{ 'numToStr/Comment.nvim', opts = {} },
--- Fuzzy Finder (files, lsp, etc)
-{ 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+  },
+  -- "gc" to comment visual regions/lines
+  { 'numToStr/Comment.nvim', opts = {} },
+  -- Fuzzy Finder (files, lsp, etc)
+  { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
 
--- Fuzzy Finder Algorithm which requires local dependencies to be built.
--- Only load if `make` is available. Make sure you have the system
--- requirements installed.
-{
-  'nvim-telescope/telescope-fzf-native.nvim',
-  -- NOTE: If you are having trouble with this installation,
-  --       refer to the README for telescope-fzf-native for more instructions.
-  build = 'make',
-  cond = function()
-    return vim.fn.executable 'make' == 1
-  end,
-},
-{
-  "nvim-telescope/telescope-file-browser.nvim",
-  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-},
-}
-)
+  -- Fuzzy Finder Algorithm which requires local dependencies to be built.
+  -- Only load if `make` is available. Make sure you have the system
+  -- requirements installed.
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    -- NOTE: If you are having trouble with this installation,
+    --       refer to the README for telescope-fzf-native for more instructions.
+    build = 'make',
+    cond = function()
+      return vim.fn.executable 'make' == 1
+    end,
+  },
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  },
+  -- treesitter
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+  }
+})
 
 -- set colorscheme
 vim.cmd.colorscheme('dayfox')
@@ -141,6 +143,7 @@ require("plugin_configs.telescope")
 require("plugin_configs.lsp")
 require("plugin_configs.cmp")
 require("plugin_configs.telescope_file_browser")
+require("plugin_configs.treesitter")
 
 
 -- open file_browser with the path of the current buffer
