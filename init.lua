@@ -144,15 +144,3 @@ require("plugin_configs.lsp")
 require("plugin_configs.cmp")
 require("plugin_configs.telescope_file_browser")
 require("plugin_configs.treesitter")
-
-
--- open file_browser with the path of the current buffer
--- vim.api.nvim_set_keymap(
---   "n",
---   "<space>fb",
---   ":Telescope file_browser path=%:p:h select_buffer=true",
---   { noremap = true }
--- )
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
