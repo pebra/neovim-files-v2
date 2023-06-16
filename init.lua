@@ -19,7 +19,15 @@ require("lazy").setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'tpope/vim-sleuth',
-  'ruanyl/vim-gh-line',
+  {
+    'ruanyl/vim-gh-line',
+    init = function(_)
+      vim.g.gh_line_map_default = 0
+      vim.g.gh_line_map = "<leader>ghl"
+      vim.g.gh_line_blame_map = "<leader>ghb"
+      vim.g.gh_use_canonical = 1
+    end,
+  },
   -- Colors
   'EdenEast/nightfox.nvim',
   {
@@ -27,9 +35,6 @@ require("lazy").setup({
     config = function(_, opts)
       -- OPTIONAL: setup the plugin. See "Configuration" for information
       require('highlite').setup {generator = {plugins = {vim = false}, syntax = false}}
-
-      -- or one of the alternate colorschemes (see the "Built-in Colorschemes" section)
-      vim.api.nvim_command 'colorscheme highlite'
     end,
     lazy = false,
     priority = math.huge,
