@@ -20,6 +20,14 @@ require("lazy").setup({
   'tpope/vim-rhubarb',
   'tpope/vim-sleuth',
   {
+    'phaazon/mind.nvim',
+    branch = 'v2.2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require'mind'.setup()
+    end
+  },
+  {
     'ruanyl/vim-gh-line',
     init = function(_)
       vim.g.gh_line_map_default = 0
@@ -32,7 +40,7 @@ require("lazy").setup({
   'EdenEast/nightfox.nvim',
   {
     'Iron-E/nvim-highlite',
-    config = function(_, opts)
+    config = function(_, _)
       -- OPTIONAL: setup the plugin. See "Configuration" for information
       require('highlite').setup {generator = {plugins = {vim = false}, syntax = false}}
     end,
