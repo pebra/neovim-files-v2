@@ -28,6 +28,10 @@ require("lazy").setup({
     end
   },
   {
+    'scalameta/nvim-metals',
+    dependencies = { "nvim-lua/plenary.nvim" }
+  },
+  {
     'ruanyl/vim-gh-line',
     init = function(_)
       vim.g.gh_line_map_default = 0
@@ -107,7 +111,7 @@ require("lazy").setup({
 })
 
 -- set colorscheme
-vim.cmd.colorscheme('dayfox')
+vim.cmd.colorscheme('nightfox')
 -- Set highlight on search
 vim.o.hlsearch = true
 -- Make line numbers default
