@@ -29,6 +29,10 @@ local on_attach = function(_, bufnr)
   nmap('<leader>lK', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
+   nmap('<leader>lf', function()
+      vim.lsp.buf.format { async = true }
+    end)
+
   -- Lesser used LSP functionality
   nmap('<leader>lgD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
   nmap('<leader>lwa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
@@ -52,7 +56,6 @@ local servers = {
   tsserver = {},
   rust_analyzer = {},
   ruby_ls = {},
-  elixirls = {},
   solargraph = {},
   lua_ls = {
     Lua = {
@@ -76,6 +79,12 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
+require('lspconfig')['elixirls'].setup {
+    cmd = { "/home/pebra/bin/elixir-ls/language_server.sh" },
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
+
 mason_lspconfig.setup_handlers {
   function(server_name)
     require('lspconfig')[server_name].setup {
@@ -85,3 +94,5 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
+
+vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]

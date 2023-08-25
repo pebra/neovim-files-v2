@@ -107,7 +107,7 @@ require("lazy").setup({
 })
 
 -- set colorscheme
-vim.cmd.colorscheme('dayfox')
+vim.cmd.colorscheme('duskfox')
 -- Set highlight on search
 vim.o.hlsearch = true
 -- Make line numbers default
