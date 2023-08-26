@@ -24,7 +24,7 @@ require("lazy").setup({
     branch = 'v2.2',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
-      require'mind'.setup()
+      require 'mind'.setup()
     end
   },
   {
@@ -42,7 +42,7 @@ require("lazy").setup({
     'Iron-E/nvim-highlite',
     config = function(_, _)
       -- OPTIONAL: setup the plugin. See "Configuration" for information
-      require('highlite').setup {generator = {plugins = {vim = false}, syntax = false}}
+      require('highlite').setup { generator = { plugins = { vim = false }, syntax = false } }
     end,
     lazy = false,
     priority = math.huge,
@@ -103,6 +103,10 @@ require("lazy").setup({
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
+  },
+  {
+    'realprogrammersusevim/md-to-html.nvim',
+    cmd = { 'MarkdownToHTML', 'NewMarkdownToHTML' },
   }
 })
 
