@@ -118,7 +118,17 @@ require("lazy").setup({
   {
     'realprogrammersusevim/md-to-html.nvim',
     cmd = { 'MarkdownToHTML', 'NewMarkdownToHTML' },
-  }
+  },
+  -- openscad
+  {
+    'salkin-mada/openscad.nvim',
+    config = function(_)
+      require('openscad')
+      -- load snippets, note requires
+      vim.g.openscad_load_snippets = true
+    end,
+    requires = 'L3MON4D3/LuaSnip'
+  },
 })
 
 -- set colorscheme
@@ -172,3 +182,4 @@ require("plugin_configs.lsp")
 require("plugin_configs.cmp")
 require("plugin_configs.telescope_file_browser")
 require("plugin_configs.treesitter")
+require("plugin_configs.openscad")
