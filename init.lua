@@ -72,7 +72,7 @@ require("lazy").setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {}, version = 'legacy' },
+      { 'j-hui/fidget.nvim',       opts = {},    version = 'legacy' },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -82,8 +82,9 @@ require("lazy").setup({
     'hrsh7th/nvim-cmp',
     dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   },
+  { 'saadparwaiz1/cmp_luasnip' },
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',   opts = {} },
   -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
@@ -129,6 +130,7 @@ require("lazy").setup({
     end,
     requires = 'L3MON4D3/LuaSnip'
   },
+  { 'github/copilot.vim' },
 })
 
 -- set colorscheme
