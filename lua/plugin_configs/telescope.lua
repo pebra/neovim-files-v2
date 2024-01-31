@@ -9,6 +9,11 @@ require('telescope').setup {
       },
     },
   },
+  -- extensions = {
+  --   file_browser = {
+  --     theme = "ivy"
+  --   }
+  -- }
 }
 
 -- Enable telescope fzf native, if installed
