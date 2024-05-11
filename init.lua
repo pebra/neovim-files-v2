@@ -41,6 +41,7 @@ require("lazy").setup({
     end,
   },
   -- Colors
+  'sainnhe/everforest',
   'EdenEast/nightfox.nvim',
   {
     'Iron-E/nvim-highlite',
@@ -129,9 +130,6 @@ require("lazy").setup({
     },
     event = 'VeryLazy',
     config = function()
-      -- Load treesitter grammar for org
-      require('orgmode').setup_ts_grammar()
-
       -- Setup treesitter
       require('nvim-treesitter.configs').setup({
         highlight = {
@@ -151,7 +149,7 @@ require("lazy").setup({
 })
 
 -- set colorscheme
-vim.cmd.colorscheme('duskfox')
+vim.cmd.colorscheme('everforest')
 -- Set highlight on search
 vim.o.hlsearch = true
 -- Make line numbers default
