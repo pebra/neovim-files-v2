@@ -145,7 +145,8 @@ require("lazy").setup({
         org_default_notes_file = '~/refile.org',
       })
     end,
-  }
+  },
+  'aserowy/tmux.nvim',
 })
 
 -- set colorscheme
