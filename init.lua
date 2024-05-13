@@ -121,7 +121,29 @@ require("lazy").setup({
     end,
     requires = 'L3MON4D3/LuaSnip'
   },
-  { 'github/copilot.vim' },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({})
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    event = "InsertEnter",
+    config = function() require("copilot_cmp").setup() end,
+    dependencies = {
+      "zbirenbaum/copilot.lua",
+      cmd = "Copilot",
+      config = function()
+        require("copilot").setup({
+          suggestion = { enabled = false },
+          panel = { enabled = false },
+        })
+      end,
+    },
+  },
   -- nvim org mode
   {
     'nvim-orgmode/orgmode',
@@ -147,6 +169,16 @@ require("lazy").setup({
     end,
   },
   'aserowy/tmux.nvim',
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  }
 })
 
 -- set colorscheme
