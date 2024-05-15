@@ -41,6 +41,7 @@ require("lazy").setup({
     end,
   },
   -- Colors
+  'rebelot/kanagawa.nvim',
   'sainnhe/everforest',
   'EdenEast/nightfox.nvim',
   {
