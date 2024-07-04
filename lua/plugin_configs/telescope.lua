@@ -40,3 +40,47 @@ vim.keymap.set('n', '<leader>pg', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>pd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set("n", '<leader>pgg',require('telescope').extensions.live_grep_args.live_grep_args, { desc = '[S]earch by [R]ipGrep' })
 
+
+-- find notes
+vim.keymap.set("n", "<leader>fn", [[<Cmd>lua require'plugin_configs.telescope'.find_notes()<CR>]], { noremap = true, silent = true })
+-- search notes
+vim.keymap.set("n", "<space>gn", [[<Cmd>lua require'plugin_configs.telescope'.grep_notes()<CR>]], { noremap = true, silent = true })
+
+
+-- credits to https://github.com/whatsthatsmell/dots/tree/master
+local M = {}
+
+function M.grep_notes()
+  local opts = {}
+  opts.hidden = true
+  opts.search_dirs = {
+    "~/notes/",
+  }
+  opts.prompt_prefix = "   "
+  opts.prompt_title = " Grep Notes"
+  opts.path_display = { "smart" }
+  require("telescope.builtin").live_grep(opts)
+end
+
+function M.find_notes()
+  require("telescope.builtin").find_files {
+    prompt_title = " Find Notes",
+    path_display = { "smart" },
+    cwd = "~/notes/",
+    layout_strategy = "horizontal",
+    layout_config = { preview_width = 0.65, width = 0.75 },
+  }
+end
+
+function M.browse_notes()
+  require("telescope").extensions.file_browser.file_browser {
+    prompt_title = " Browse Notes",
+    prompt_prefix = " ﮷ ",
+    cwd = "~/notes/",
+    layout_strategy = "horizontal",
+    layout_config = { preview_width = 0.65, width = 0.75 },
+  }
+end
+
+
+return M
