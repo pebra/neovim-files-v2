@@ -54,7 +54,7 @@ function M.grep_notes()
   local opts = {}
   opts.hidden = true
   opts.search_dirs = {
-    "~/notes/",
+    "~/Sync/Docs/notes/",
   }
   opts.prompt_prefix = "   "
   opts.prompt_title = " Grep Notes"
@@ -66,7 +66,7 @@ function M.find_notes()
   require("telescope.builtin").find_files {
     prompt_title = " Find Notes",
     path_display = { "smart" },
-    cwd = "~/notes/",
+    cwd = "~/Sync/Docs/notes/",
     layout_strategy = "horizontal",
     layout_config = { preview_width = 0.65, width = 0.75 },
   }
@@ -76,7 +76,7 @@ function M.browse_notes()
   require("telescope").extensions.file_browser.file_browser {
     prompt_title = " Browse Notes",
     prompt_prefix = " ﮷ ",
-    cwd = "~/notes/",
+    cwd = "~/Sync/Docs/notes/",
     layout_strategy = "horizontal",
     layout_config = { preview_width = 0.65, width = 0.75 },
   }
