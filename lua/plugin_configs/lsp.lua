@@ -20,6 +20,7 @@ lsp_zero.on_attach(function(client, bufnr)
   nmap('<leader>lgt', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>lds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>lws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('<leader>lse', vim.diagnostic.open_float, '[S]how [E]errors')
 
   -- See `:help K` for why this keymap
   nmap('<leader>lK', vim.lsp.buf.hover, 'Hover Documentation')
