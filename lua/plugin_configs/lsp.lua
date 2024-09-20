@@ -45,10 +45,27 @@ end)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {'rust_analyzer', 'ruby_lsp', 'elixirls', 'lua_ls'},
+  ensure_installed = {'rust_analyzer', 'ruby_lsp', 'elixirls', 'lua_ls', 'kotlin_language_server'},
   handlers = {
     function(server_name)
       require('lspconfig')[server_name].setup({})
     end,
   },
+})
+
+-- metals
+lsp_zero.extend_lspconfig({
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+})
+
+local metals_config = require('metals').bare_config()
+metals_config.capabilities = lsp_zero.get_capabilities()
+
+local metals_augroup = vim.api.nvim_create_augroup('nvim-metals', {clear = true})
+vim.api.nvim_create_autocmd('FileType', {
+  group = metals_augroup,
+  pattern = {'scala', 'sbt', 'java'},
+  callback = function()
+    require('metals').initialize_or_attach(metals_config)
+  end
 })
