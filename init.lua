@@ -213,7 +213,7 @@ require("lazy").setup({
 })
 
 -- set colorscheme
-vim.cmd.colorscheme('everforest')
+vim.cmd.colorscheme('kanagawa-dragon')
 -- Set highlight on search
 vim.o.hlsearch = true
 -- Make line numbers default
