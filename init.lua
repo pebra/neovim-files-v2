@@ -62,9 +62,17 @@ require("lazy").setup({
     end,
   },
   -- Colors
+  {
+    "rktjmp/lush.nvim",
+    -- if you wish to use your own colorscheme:
+    -- { dir = '/absolute/path/to/colorscheme', lazy = true },
+  },
   'rebelot/kanagawa.nvim',
   'sainnhe/everforest',
   'EdenEast/nightfox.nvim',
+  {
+    "mstcl/ivory",
+  },
   {
     'Iron-E/nvim-highlite',
     config = function(_, _)
@@ -213,7 +221,7 @@ require("lazy").setup({
 })
 
 -- set colorscheme
-vim.cmd.colorscheme('kanagawa-dragon')
+vim.cmd.colorscheme('kanagawa')
 -- Set highlight on search
 vim.o.hlsearch = true
 -- Make line numbers default
@@ -258,6 +266,7 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnos
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
+require("config.listchars")
 require("plugin_configs.telescope")
 require("plugin_configs.lsp")
 require("plugin_configs.cmp")
