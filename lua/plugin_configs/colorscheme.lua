@@ -1,2 +1,2 @@
 vim.o.background="dark"
-vim.cmd.colorscheme('nightfox')
+vim.cmd.colorscheme('catppuccin-frappe')
