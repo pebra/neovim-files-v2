@@ -250,7 +250,6 @@ elseif vim.env.RUBY_VERSION then
 end
 
 require("config.listchars")
-require("config.ai_key")
 require("plugin_configs.telescope")
 require("plugin_configs.lsp")
 require("plugin_configs.cmp")
