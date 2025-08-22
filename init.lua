@@ -1,5 +1,4 @@
--- Declare vim as a global variable
----@diagnostic disable: undefined-global
+-- Declare vim as a global variable @diagnostic disable: undefined-global
 local vim = vim
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -82,6 +81,16 @@ require("lazy").setup({
     "mstcl/ivory",
   },
   {
+    "baliestri/aura-theme",
+    lazy = false,
+    priority = 1000,
+    config = function(plugin)
+      vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
+      vim.cmd([[colorscheme aura-dark]])
+    end
+  },
+  { 'kepano/flexoki-neovim', name = 'flexoki' },
+  {
     'Iron-E/nvim-highlite',
     config = function(_, _)
       -- OPTIONAL: setup the plugin. See "Configuration" for information
@@ -95,17 +104,23 @@ require("lazy").setup({
     'nvim-lualine/lualine.nvim',
     opts = {
       options = {
-        icons_enabled = false,
-        theme = 'onedark',
+        icons_enabled = true,
+        theme = 'palenight',
         component_separators = '|',
         section_separators = '',
+      },
+      sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'diff', 'diagnostics' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'branch', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
       },
     },
   },
   -- lsp
-  { 'williamboman/mason.nvim' },
-  { 'williamboman/mason-lspconfig.nvim' },
-  { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
+  { 'VonHeikemen/lsp-zero.nvim',         branch = 'v3.x' },
   { 'neovim/nvim-lspconfig' },
   {
     'hrsh7th/nvim-cmp',
@@ -168,91 +183,6 @@ require("lazy").setup({
     end,
     requires = 'L3MON4D3/LuaSnip'
   },
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({})
-    end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    event = "InsertEnter",
-    config = function() require("copilot_cmp").setup() end,
-    dependencies = {
-      "zbirenbaum/copilot.lua",
-      cmd = "Copilot",
-      config = function()
-        require("copilot").setup({
-          suggestion = { enabled = false },
-          panel = { enabled = false },
-        })
-      end,
-    },
-  },
-  {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    lazy = false,
-    version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-    dependencies = {
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      --- The below dependencies are optional,
-      "echasnovski/mini.pick",         -- for file_selector provider mini.pick
-      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp",              -- autocompletion for avante commands and mentions
-      "ibhagwan/fzf-lua",              -- for file_selector provider fzf
-      "nvim-tree/nvim-web-devicons",   -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua",        -- for providers='copilot'
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
-    },
-    opts = require("plugin_configs.avante_provider")
-  },
-  -- nvim org mode
-  {
-    'nvim-orgmode/orgmode',
-    dependencies = {
-      { 'nvim-treesitter/nvim-treesitter', lazy = true },
-    },
-    event = 'VeryLazy',
-    config = function()
-      -- Setup orgmode
-      require('orgmode').setup({
-        org_agenda_files = '~/Documents/*.org',
-        org_default_notes_file = '~/refile.org',
-      })
-    end,
-  },
   'aserowy/tmux.nvim',
   {
     "kylechui/nvim-surround",
@@ -263,7 +193,9 @@ require("lazy").setup({
         -- Configuration here, or leave empty to use defaults
       })
     end
-  }
+  },
+  { "Shopify/shadowenv.vim", cond = vim.fn.executable("shadowenv") == 1 },
+  require("plugin_configs.codecompanion")
 })
 
 -- Set highlight on search
@@ -310,8 +242,14 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnos
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
+-- set ruby host dynamically
+if vim.env.RUBY_ROOT then
+  vim.g.ruby_host_prog = vim.env.RUBY_ROOT
+elseif vim.env.RUBY_VERSION then
+  vim.g.ruby_host_prog = "/opt/rubies/" .. vim.env.RUBY_VERSION .. "/"
+end
+
 require("config.listchars")
-require("config.ai_key")
 require("plugin_configs.telescope")
 require("plugin_configs.lsp")
 require("plugin_configs.cmp")
