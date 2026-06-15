@@ -22,54 +22,7 @@ require("lazy").setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'tpope/vim-sleuth',
-  {
-    'phaazon/mind.nvim',
-    branch = 'v2.2',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require 'mind'.setup()
-    end
-  },
-  {
-    "scalameta/nvim-metals",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    -- ft = { "scala", "sbt", "java" },
-    -- opts = function()
-    --   local metals_config = require("metals").bare_config()
-    --   metals_config.on_attach = function(client, bufnr)
-    --     -- your on_attach function
-    --   end
-    --
-    --   return metals_config
-    -- end,
-    -- config = function(self, metals_config)
-    --   local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-    --   vim.api.nvim_create_autocmd("FileType", {
-    --     pattern = self.ft,
-    --     callback = function()
-    --       require("metals").initialize_or_attach(metals_config)
-    --     end,
-    --     group = nvim_metals_group,
-    --   })
-    -- end
-  },
-  {
-    'ruanyl/vim-gh-line',
-    init = function(_)
-      vim.g.gh_line_map_default = 0
-      vim.g.gh_line_map = "<leader>ghl"
-      vim.g.gh_line_blame_map = "<leader>ghb"
-      vim.g.gh_use_canonical = 1
-    end,
-  },
-  -- Colors
-  {
-    "rktjmp/lush.nvim",
-    -- if you wish to use your own colorscheme:
-    -- { dir = '/absolute/path/to/colorscheme', lazy = true },
-  },
+  'tpope/vim-surround',
   'rebelot/kanagawa.nvim',
   'neanias/everforest-nvim',
   'pebra/pebrafonte.nvim',
@@ -90,6 +43,13 @@ require("lazy").setup({
     end
   },
   { 'kepano/flexoki-neovim', name = 'flexoki' },
+  {
+    "pebra/salmon.nvim",
+    config = function()
+      require("salmon").setup({})
+      vim.cmd("colorscheme salmon")
+    end,
+  },
   {
     'Iron-E/nvim-highlite',
     config = function(_, _)
@@ -120,16 +80,12 @@ require("lazy").setup({
     },
   },
   -- lsp
-  { 'VonHeikemen/lsp-zero.nvim',         branch = 'v3.x' },
   { 'neovim/nvim-lspconfig' },
   {
     'hrsh7th/nvim-cmp',
     dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   },
   { 'saadparwaiz1/cmp_luasnip' },
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',   opts = {} },
-  -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
     version = '*',
@@ -169,10 +125,6 @@ require("lazy").setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
   },
-  {
-    'realprogrammersusevim/md-to-html.nvim',
-    cmd = { 'MarkdownToHTML', 'NewMarkdownToHTML' },
-  },
   -- openscad
   {
     'salkin-mada/openscad.nvim',
@@ -195,7 +147,44 @@ require("lazy").setup({
     end
   },
   { "Shopify/shadowenv.vim", cond = vim.fn.executable("shadowenv") == 1 },
-  require("plugin_configs.codecompanion")
+  {
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>cs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>cl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+    },
+  },
+  { "pablopunk/pi.nvim" }
 })
 
 -- Set highlight on search
@@ -250,6 +239,12 @@ elseif vim.env.RUBY_VERSION then
 end
 
 require("config.listchars")
+
+local work_customizations = vim.fn.stdpath("config") .. "/lua/config/work_customizations.lua"
+if vim.fn.filereadable(work_customizations) == 1 then
+  require("config.work_customizations")
+end
+
 require("plugin_configs.telescope")
 require("plugin_configs.lsp")
 require("plugin_configs.cmp")
@@ -257,4 +252,4 @@ require("plugin_configs.telescope_file_browser")
 require("plugin_configs.treesitter")
 require("plugin_configs.openscad")
 require("plugin_configs.neotree")
-require("plugin_configs.colorscheme")
+require("plugin_configs.pi")
