@@ -64,3 +64,76 @@ if vim.fn.filereadable("Gemfile") == 1 and vim.fn.executable(ruby_lsp_bin) == 0 
   })
 end
 
+vim.lsp.config("ruby_lsp", {
+  cmd = { ruby_lsp_bin },
+  filetypes = { "ruby" },
+  root_markers = { "Gemfile", ".git" },
+  init_options = {
+    formatter = "auto",
+    linters = { "auto" },
+    addonSettings = {
+      ["Ruby LSP Rails"] = {
+        enablePendingMigrationsPrompt = false,
+      },
+    },
+    enabledFeatures = {
+      "documentSymbols",
+      "documentHighlight",
+      "foldingRanges",
+      "selectionRanges",
+      "semanticHighlighting",
+      "diagnostics",
+      "formatting",
+      "codeActions",
+      "inlayHints",
+      "onTypeFormatting",
+      "hover",
+      "completion",
+      "codeLens",
+      "definition",
+      "workspaceSymbol",
+      "signatureHelp",
+      "typeHierarchy",
+    },
+    experimentalFeaturesEnabled = true,
+  },
+})
+vim.lsp.enable("ruby_lsp")
+-- END RUBY
+
+-- LUA
+vim.lsp.config("lua_ls", {
+  cmd = { "lua-language-server" },
+  filetypes = { "lua" },
+  root_markers = {
+    ".luarc.json",
+    ".luarc.jsonc",
+    ".stylua.toml",
+    "stylua.toml",
+    "selene.toml",
+    "selene.yml",
+    ".git",
+  },
+  settings = {
+    Lua = {
+      runtime = {
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME,
+          "${3rd}/luv/library",
+        },
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+})
+vim.lsp.enable("lua_ls")
+-- END LUA
