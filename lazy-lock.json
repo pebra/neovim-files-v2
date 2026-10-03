@@ -19,7 +19,7 @@
   "nvim-highlite": { "branch": "master-v4", "commit": "2de97e12b34ccb68acf4a3fc858cb9d0cc6fcd2f" },
   "nvim-lspconfig": { "branch": "master", "commit": "a683e0ddf0cf64c6cd689e18ffb480ade3c162b7" },
   "nvim-surround": { "branch": "main", "commit": "2e93e154de9ff326def6480a4358bfc149d5da2c" },
-  "nvim-treesitter": { "branch": "master", "commit": "cf12346a3414fa1b06af75c79faebe7f76df080a" },
+  "nvim-treesitter": { "branch": "main", "commit": "4916d6592ede8c07973490d9322f187e07dfefac" },
   "nvim-web-devicons": { "branch": "master", "commit": "dfbfaa967a6f7ec50789bead7ef87e336c1fa63c" },
   "openscad.nvim": { "branch": "main", "commit": "31c946cdc6895339ae523b9136a5017b0f7339aa" },
   "pebrafonte.nvim": { "branch": "main", "commit": "42ab97c434f25bac72eed484d94ecb707084cbf2" },
