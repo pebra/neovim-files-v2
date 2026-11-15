@@ -1,4 +1,12 @@
 -- LSP settings
+
+-- Advertise nvim-cmp's capabilities to every language server so that
+-- completion, snippets and resolve support are enabled everywhere.
+local ok_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if ok_cmp then
+  vim.lsp.config("*", { capabilities = cmp_nvim_lsp.default_capabilities() })
+end
+
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(event)
     local bufnr = event.buf
@@ -24,8 +32,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
     nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
     nmap('<leader>lf', function()
-      vim.lsp.buf.format { async = true }
-    end)
+      local ok, conform = pcall(require, "conform")
+      if ok then
+        conform.format({ async = true, lsp_format = "fallback" })
+      else
+        vim.lsp.buf.format { async = true }
+      end
+    end, '[F]ormat')
 
     -- Lesser used LSP functionality
     nmap('<leader>lgD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -137,3 +150,40 @@ vim.lsp.config("lua_ls", {
 })
 vim.lsp.enable("lua_ls")
 -- END LUA
+
+-- KOTLIN
+-- Prefer the official JetBrains language server (`intellij-server`, shipped by
+-- the `kotlin-lsp` package). See https://github.com/Kotlin/kotlin-lsp
+local kotlin_lsp_cmd = { "kotlin-lsp", "--stdio" }
+if vim.fn.executable("intellij-server") == 1 then
+  kotlin_lsp_cmd = { "intellij-server", "--stdio" }
+end
+
+local kotlin_root_markers = {
+  "settings.gradle", -- Gradle (multi-project)
+  "settings.gradle.kts",
+  "build.gradle",
+  "build.gradle.kts",
+  "pom.xml",
+  ".git",
+}
+
+vim.lsp.config("kotlin_lsp", {
+  cmd = kotlin_lsp_cmd,
+  filetypes = { "kotlin" },
+  root_markers = kotlin_root_markers,
+  -- The official server is project-scoped and does not support single files.
+  single_file_support = false,
+})
+vim.lsp.enable("kotlin_lsp")
+
+-- Optional fallback: the community `kotlin-language-server` (fwcd). Enable this
+-- instead if you prefer a lighter, fully open-source server.
+-- vim.lsp.config("kotlin_language_server", {
+--   cmd = { "kotlin-language-server" },
+--   filetypes = { "kotlin" },
+--   root_markers = kotlin_root_markers,
+--   init_options = { storagePath = vim.fn.stdpath("cache") .. "/kotlin-language-server" },
+-- })
+-- vim.lsp.enable("kotlin_language_server")
+-- END KOTLIN

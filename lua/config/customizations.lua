@@ -1,6 +1,7 @@
 local opt = vim.opt
 
 opt.cursorline = true
+opt.cursorcolumn = true
 
 opt.list = true
 
@@ -81,3 +82,4 @@ local function copy_file_path()
 end
 vim.keymap.set('n', '<leader>fc', copy_file_path, { desc = '[F]ile [C]opy Path' })
 --
+

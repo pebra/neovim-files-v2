@@ -46,7 +46,7 @@ require("lazy").setup({
   {
     "pebra/salmon.nvim",
     config = function()
-      require("salmon").setup({})
+      require("salmon").setup({ palette = { dark = { highlight_low = "#483933" } } })
       vim.cmd("colorscheme salmon")
     end,
   },
@@ -134,6 +134,19 @@ require("lazy").setup({
       vim.g.openscad_load_snippets = true
     end,
     requires = 'L3MON4D3/LuaSnip'
+  },
+  -- kotlin / android
+  {
+    'stevearc/conform.nvim',
+    config = function()
+      require('plugin_configs.conform')
+    end,
+  },
+  {
+    'iamironz/android-nvim-plugin',
+    config = function()
+      require('plugin_configs.android')
+    end,
   },
   'aserowy/tmux.nvim',
   {
@@ -238,8 +251,6 @@ elseif vim.env.RUBY_VERSION then
   vim.g.ruby_host_prog = "/opt/rubies/" .. vim.env.RUBY_VERSION .. "/"
 end
 
-require("config.listchars")
-
 local work_customizations = vim.fn.stdpath("config") .. "/lua/config/work_customizations.lua"
 if vim.fn.filereadable(work_customizations) == 1 then
   require("config.work_customizations")
@@ -253,3 +264,5 @@ require("plugin_configs.treesitter")
 require("plugin_configs.openscad")
 require("plugin_configs.neotree")
 require("plugin_configs.pi")
+
+require("config.customizations")
